@@ -8,6 +8,7 @@ class UserRequest(BaseModel):
 
 
 class UserOutput(BaseModel):
+    id: int = Field(...,description="This is the user ID")
     name: str = Field(..., min_length=3, max_length=50, description = "The name of the user")
     age: int = Field(..., ge=1, le=120, description="The user's age")
     email: EmailStr = Field(..., format='email', description="User's email")

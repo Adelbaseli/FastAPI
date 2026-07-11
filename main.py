@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from schemas import UserRequest, UserResponse
+from fastapi import FastAPI, status
+from schemas import UserRequest, UserResponse, UserOutput
 
 app = FastAPI()
 
@@ -15,8 +15,15 @@ def read_root():
 # @app.get('/admin')
 # def hello_admin(username: str = None, age: int = None):
 #     return f'hello {username} with {age} years old'
+users = []
 
-@app.post('/user', response_model=UserResponse)
+@app.post('/user', response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserRequest):
+   # print(user.model_dump())
+   # print("user type:", type(user))
+    new_user = UserOutput(
+        id=len(users) + 1,
+        **user.model_dump())
+    users.append(new_user)
     return {"message": "user created",
-            "user": user}
+            "user": new_user}
