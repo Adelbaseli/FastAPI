@@ -33,3 +33,11 @@ def create_user(user: UserRequest):
 @app.get('/users', response_model=List[UserOutput])
 def get_users():
     return users
+
+@app.get('/user/{user_id}', response_model=UserOutput)
+def get_user(user_id: int):
+    user = next((u for u in users if user_id == u.id), None)
+    if not user:
+        raise HTTPException(status_code = status.HTTP_404_BAD_REQUEST,
+                           detail="User not found")
+    return user
