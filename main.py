@@ -1,5 +1,6 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, HTTPException
 from schemas import UserRequest, UserResponse, UserOutput
+from typing import List
 
 app = FastAPI()
 
@@ -19,11 +20,16 @@ users = []
 
 @app.post('/user', response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserRequest):
-   # print(user.model_dump())
-   # print("user type:", type(user))
+    if any(user.email == u.email for u in users):
+        raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
+                           detail="Email already exists")
     new_user = UserOutput(
         id=len(users) + 1,
         **user.model_dump())
     users.append(new_user)
     return {"message": "user created",
             "user": new_user}
+
+@app.get('/users', response_model=List[UserOutput])
+def get_users():
+    return users
