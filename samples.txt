@@ -1,0 +1,67 @@
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Adel",
+  "age": 10,
+  "email": "adel@example.com",
+  "password": "string"
+}'
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Ali",
+  "age": 20,
+  "email": "ali@example.com",
+  "password": "string"
+}'
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Ahmad",
+  "age": 30,
+  "email": "ahmad@example.com",
+  "password": "string"
+}'
+
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Meli",
+  "age": 40,
+  "email": "meli@example.com",
+  "password": "string"
+}'
+
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Ghasem",
+  "age": 50,
+  "email": "ghasem@example.com",
+  "password": "string"
+}'
+
+curl -X 'POST' \
+  'http://127.0.0.1:8000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Sina",
+  "age": 60,
+  "email": "sina@example.com",
+  "password": "string"
+}'
