@@ -1,6 +1,7 @@
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, status
 from schemas import UserRequest, UserResponse, UserOutput
 from typing import List
+from exceptions import UserNotFoundException, EmailAlreadyExistsException
 
 app = FastAPI()
 
@@ -21,8 +22,7 @@ users = []
 @app.post('/user', response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: UserRequest):
     if any(user.email == u.email for u in users):
-        raise HTTPException(status_code = status.HTTP_400_BAD_REQUEST,
-                           detail="Email already exists")
+        raise EmailAlreadyExistsException()
     new_user = UserOutput(
         id=len(users) + 1,
         **user.model_dump())
@@ -38,8 +38,7 @@ def get_users():
 def get_user(user_id: int):
     user = next((u for u in users if user_id == u.id), None)
     if not user:
-        raise HTTPException(status_code = status.HTTP_404_BAD_REQUEST,
-                           detail="User not found")
+        raise UserNotFoundException()
     return user
 
 
@@ -74,8 +73,7 @@ def patch_user(user_id: int, user: UserRequest):
 def user_delete(user_id: int):
     existing_user = next((u for u in users if user_id == u.id) , None)
     if not existing_user:
-        raise HTTPException(status_code = status.HTTP_404_BAD_REQUEST,
-                           detail="User not found")
+        raise UserNotFoundException()
     users.remove(existing_user)
     for u in users:
         if u.id > user_id:
